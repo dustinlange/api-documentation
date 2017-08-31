@@ -1,12 +1,6 @@
 ---
 title: API Reference
 
-language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
-
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
@@ -14,26 +8,8 @@ toc_footers:
 includes:
   - errors
 
-search: true
+search: false
 ---
-
---- 
-
-title: Nextech Select Patient API 
-
-language_tabs: 
-   - shell 
-
-toc_footers: 
-   - <a href='#'>Sign Up for a Developer Key</a> 
-   - <a href='https://github.com/lavkumarv'>Documentation Powered by lav</a> 
-
-includes: 
-   - errors 
-
-search: true 
-
---- 
 
 # Introduction 
 
@@ -42,7 +18,7 @@ The Nextech Select Patient API is a RESTful implementation based on the STU 3 (3
 Although the FHIR® standard supports both JSON and XML, this API currently only supports JSON.  Therefore any type explicitly defined in the request's `Accept` header will be ignored.  
 
 
-## Authentication
+# Authentication
 Nextech's implementation of the FHIR® standard is protected by the OAuth 2 protocol for authenticating requests.  Every API request requires a Bearer token to be passed in the Authorization Header.
 
 ```Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng...```
@@ -85,13 +61,10 @@ The response includes the `access_token` which should be included in the Authori
 
 **Version:** v1 
 
-# Authentication 
+# Patient API
 
-|oauth2|*OAuth 2.0*|
-|---|---| 
-
-# /{PATIENTUID}/ALLERGYINTOLERANCE
-## ***GET*** 
+## Allergy Intolerance
+ ***GET*** 
 
 **Summary:** Get a bundle of allergies for a single patient
 
@@ -117,8 +90,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/BINARY/$AUTOGEN-CCD-IF
-## ***GET*** 
+## CCDA Summary
+***GET*** 
 
 **Summary:** Get a CCDA summary document for the specified patient
 
@@ -143,8 +116,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/CAREPLAN
-## ***GET*** 
+## Care Plan
+ ***GET*** 
 
 **Summary:** Get a bundle of care plans for a single patient
 
@@ -170,8 +143,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/CLINICALIMPRESSION
-## ***GET*** 
+## Clinical Impression
+***GET*** 
 
 **Summary:** Get a bundle of clinical impressions for a patient
 
@@ -197,8 +170,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/CONDITION
-## ***GET*** 
+## Condition
+***GET*** 
 
 **Summary:** Get a bundle of conditions for a single patient
 
@@ -225,8 +198,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/DEVICE
-## ***GET*** 
+## Device
+***GET*** 
 
 **Summary:** Get a bundle of devices for a patient
 
@@ -250,8 +223,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/ENCOUNTER
-## ***GET*** 
+## Encounter
+***GET*** 
 
 **Summary:** Get a bundle of encounters for a single patient
 
@@ -277,8 +250,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /REFERENCE
-## ***GET*** 
+## Reference
+***GET*** 
 
 ### HTTP Request 
 `***GET*** /Reference` 
@@ -295,27 +268,8 @@ The response includes the `access_token` which should be included in the Authori
 | ---- | ----------- |
 | 200 | OK |
 
-# /ERROR
-## ***GET*** 
-
-### HTTP Request 
-`***GET*** /Error` 
-
-**Parameters**
-
-| Name | Located in | Description | Required | Type |
-| ---- | ---------- | ----------- | -------- | ---- |
-| errorCode | query |  | Yes | string |
-| nx-practice-id | header | The unique identifier for a practice | Yes | string |
-
-**Responses**
-
-| Code | Description |
-| ---- | ----------- |
-| 200 | OK |
-
-# /{PATIENTUID}/GOAL
-## ***GET*** 
+## Goal
+***GET*** 
 
 **Summary:** Get a bundle of goals for a single patient
 
@@ -341,8 +295,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/IMMUNIZATION
-## ***GET*** 
+## Immunization
+***GET*** 
 
 **Summary:** Get a bundle of immunizations for a single patient
 
@@ -368,8 +322,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/MEDICATIONDISPENSE
-## ***GET*** 
+## Medication Dispensement
+***GET*** 
 
 **Summary:** Get a bundle of medication dispensements for a single patient
 
@@ -395,8 +349,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/MEDICATIONSTATEMENT
-## ***GET*** 
+## Medication Statements
+***GET*** 
 
 **Summary:** Get a bundle of medication statements for a single patient
 
@@ -422,8 +376,8 @@ The response includes the `access_token` which should be included in the Authori
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/OBSERVATION
-## ***GET*** 
+## Observation
+***GET*** 
 
 **Summary:** Get a bundle of diagnostic observations for a single patient
 
@@ -455,8 +409,8 @@ RESTful searching for observations by date is supported. See https://www.hl7.org
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /{PATIENTUID}
-## ***GET*** 
+## Patient
+***GET*** 
 
 **Summary:** Get the demographic information for a patient
 
@@ -479,8 +433,8 @@ RESTful searching for observations by date is supported. See https://www.hl7.org
 | 404 | Specified patient does not exist |
 | 500 | Internal server error |
 
-# /ID
-## ***GET*** 
+## Patient ID Search
+ ***GET*** 
 
 **Summary:** Attempts to find a single patient that matches the given search criteria and if
 successful returns that patient's unique identifier.
@@ -514,8 +468,8 @@ At least one of query parameters is required to perform a search.
 | 404 | No patients met the search criteria |
 | 500 | Internal server error |
 
-# /
-## ***GET*** 
+## Patient Search
+ ***GET*** 
 
 **Summary:** Searches for all patients matching the given search criteria. At least one search parameter is required.
 
@@ -548,8 +502,8 @@ Note: The search currently has a limit of 500 patients.
 | 404 | No patients met the search criteria |
 | 500 | Internal server error |
 
-# /{PATIENTUID}/PROCEDURE
-## ***GET*** 
+## Procedure
+ ***GET*** 
 
 **Summary:** Get a bundle of procedures for a single patient
 
