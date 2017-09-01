@@ -198,10 +198,10 @@
     </style>
     <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all.js"></script>
+      <script src="javascripts/all_nosearch.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -210,34 +210,74 @@
     </a>
     <div class="toc-wrapper">
       <img src="images/logo.png" class="logo" alt="Logo" />
-        <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-              <a href="#" data-language-name="javascript">javascript</a>
-        </div>
-        <div class="search">
-          <input type="text" class="search" id="input-search" placeholder="Search">
-        </div>
-        <ul class="search-results"></ul>
       <div id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Kittens">Get All Kittens</a>
+                    <a href="#request-authorization" class="toc-h2 toc-link" data-title="Authentication">Request Authorization</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Kittens">Get a Specific Kitten</a>
+                    <a href="#request-access-token" class="toc-h2 toc-link" data-title="Authentication">Request Access Token</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#patient-api" class="toc-h1 toc-link" data-title="Patient API">Patient API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#allergy-intolerance" class="toc-h2 toc-link" data-title="Patient API">Allergy Intolerance</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Kittens">Delete a Specific Kitten</a>
+                    <a href="#ccda-summary" class="toc-h2 toc-link" data-title="Patient API">CCDA Summary</a>
+                  </li>
+                  <li>
+                    <a href="#care-plan" class="toc-h2 toc-link" data-title="Patient API">Care Plan</a>
+                  </li>
+                  <li>
+                    <a href="#clinical-impression" class="toc-h2 toc-link" data-title="Patient API">Clinical Impression</a>
+                  </li>
+                  <li>
+                    <a href="#condition" class="toc-h2 toc-link" data-title="Patient API">Condition</a>
+                  </li>
+                  <li>
+                    <a href="#device" class="toc-h2 toc-link" data-title="Patient API">Device</a>
+                  </li>
+                  <li>
+                    <a href="#encounter" class="toc-h2 toc-link" data-title="Patient API">Encounter</a>
+                  </li>
+                  <li>
+                    <a href="#reference" class="toc-h2 toc-link" data-title="Patient API">Reference</a>
+                  </li>
+                  <li>
+                    <a href="#goal" class="toc-h2 toc-link" data-title="Patient API">Goal</a>
+                  </li>
+                  <li>
+                    <a href="#immunization" class="toc-h2 toc-link" data-title="Patient API">Immunization</a>
+                  </li>
+                  <li>
+                    <a href="#medication-dispensement" class="toc-h2 toc-link" data-title="Patient API">Medication Dispensement</a>
+                  </li>
+                  <li>
+                    <a href="#medication-statements" class="toc-h2 toc-link" data-title="Patient API">Medication Statements</a>
+                  </li>
+                  <li>
+                    <a href="#observation" class="toc-h2 toc-link" data-title="Patient API">Observation</a>
+                  </li>
+                  <li>
+                    <a href="#patient" class="toc-h2 toc-link" data-title="Patient API">Patient</a>
+                  </li>
+                  <li>
+                    <a href="#patient-id-search" class="toc-h2 toc-link" data-title="Patient API">Patient ID Search</a>
+                  </li>
+                  <li>
+                    <a href="#patient-search" class="toc-h2 toc-link" data-title="Patient API">Patient Search</a>
+                  </li>
+                  <li>
+                    <a href="#procedure" class="toc-h2 toc-link" data-title="Patient API">Procedure</a>
                   </li>
               </ul>
           </li>
@@ -254,184 +294,1289 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>The Nextech Select Patient API is a RESTful implementation based on the STU 3 (3.0.1) version of the <a href="https://www.hl7.org/fhir/index.html">FHIR® standard</a>.</p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/tripit/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
+<p>Although the FHIR® standard supports both JSON and XML, this API currently only supports JSON.  Therefore any type explicitly defined in the request&#39;s <code>Accept</code> header will be ignored.  </p>
 <h1 id='authentication'>Authentication</h1>
-<blockquote>
-<p>To authorize, use this code:</p>
-</blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p>Nextech&#39;s implementation of the FHIR® standard is protected by the OAuth 2 protocol for authenticating requests.  Every API request requires a Bearer token to be passed in the Authorization Header.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p><code>Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng...</code></p>
+<h3 id='request-authorization'>Request Authorization</h3>
+<p>To obtain a Bearer token, the user must first request authorization using a registered app&#39;s client identifier.</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<p><code>https://login.microsoftonline.com/mdintellesys.com/oauth2/authorize?response_type=code&amp;resource=https%3A%2F%2Fmdintellesys.com%2FPartnerAPI&amp;client_id=[client_id]</code></p>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
-</blockquote>
+<p>The user will be asked to log in using their credentials.  Upon first login, they will be asked to authorize the use of the application.  If they don&#39;t have credentials, they will need to create an account which will verify their identity. </p>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Upon successful authentication, an authorization code will be included as the value of the <code>code</code> parameter in the redirect URL.  This code, along with the client secret will be included in the request to get an access token.</p>
+<h3 id='request-access-token'>Request Access Token</h3>
+<p><code>POST https://login.microsoftonline.com/mdintellesys.com/oauth2/token</code></p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>Add the following parameters as a <code>x-www-form-urlencoded</code> query string to the request body:
+<code>
+grant_type: authorization_code
+client_id: [client_id]
+code: [authorization_code]
+client_secret: [client_secret]
+</code></p>
 
-<p><code>Authorization: meowmeowmeow</code></p>
+<p>The response includes the <code>access_token</code> which should be included in the Authorization header when making an API request.
+<code>
+{
+  &quot;token_type&quot;: &quot;Bearer&quot;,
+  &quot;scope&quot;: &quot;user_impersonation&quot;,
+  &quot;expires_in&quot;: &quot;3599&quot;,
+  &quot;ext_expires_in&quot;: &quot;0&quot;,
+  &quot;expires_on&quot;: &quot;1495481979&quot;,
+  &quot;not_before&quot;: &quot;1495478079&quot;,
+  &quot;resource&quot;: &quot;https://mdintellesys.com/PartnerAPI&quot;,
+  &quot;access_token&quot;: &quot;eyJ0eXAiOiJKV1QiLC...&quot;
+  &quot;refresh_token&quot;: &quot;AQABAAAAAABnfiG-m...&quot;
+  &quot;id_token&quot;: &quot;eyJ0eXAiOiJKV1QiLCJh...&quot;
+}
+</code> </p>
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<p><strong>Version:</strong> v1 </p>
+<h1 id='patient-api'>Patient API</h1><h2 id='allergy-intolerance'>Allergy Intolerance</h2>
+<p><strong><em>GET</em></strong> </p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p><strong>Summary:</strong> Get a bundle of allergies for a single patient</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
+<p><strong>Description:</strong> RESTful searching for allergies by last update date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
-<h3 id='query-parameters'>Query Parameters</h3>
+<p><code>***GET*** /{patientUID}/AllergyIntolerance</code> </p>
+
+<p><strong>Parameters</strong></p>
+
 <table><thead>
 <tr>
-<th>Parameter</th>
-<th>Default</th>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of allergy last update date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>200</td>
+<td>Returns a bundle of allergies for a patient</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
 </tr>
 </tbody></table>
+<h2 id='ccda-summary'>CCDA Summary</h2>
+<p><strong><em>GET</em></strong> </p>
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
-
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<p><strong>Summary:</strong> Get a CCDA summary document for the specified patient</p>
 <h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters'>URL Parameters</h3>
+<p><code>***GET*** /{patientUid}/Binary/$autogen-ccd-if</code> </p>
+
+<p><strong>Parameters</strong></p>
+
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUid</td>
+<td>path</td>
+<td>The patient&#39;s unique identifier (can be found by patient ID search method)</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>start</td>
+<td>query</td>
+<td>The start date for which the CCD should be generated (if not specified then all records              starting with the patient&#39;s first visit are included)</td>
+<td>No</td>
+<td>dateTime</td>
+</tr>
+<tr>
+<td>end</td>
+<td>query</td>
+<td>The end date for which the CCD should be generated (if not specified then all records              through the patient&#39;s latest visit are included)</td>
+<td>No</td>
+<td>dateTime</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>200</td>
+<td>Returns a FHIR Binary object containting the base64-ecoded CCDA summary document              https://www.hl7.org/fhir/binary.html</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Invalid patient ID provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='care-plan'>Care Plan</h2>
+<p><strong><em>GET</em></strong> </p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<p><strong>Summary:</strong> Get a bundle of care plans for a single patient</p>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+<p><strong>Description:</strong> RESTful searching for care plans by visit date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
+<p><code>***GET*** /{patientUID}/CarePlan</code> </p>
+
+<p><strong>Parameters</strong></p>
+
 <table><thead>
 <tr>
-<th>Parameter</th>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of visit date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>200</td>
+<td>Returns a bundle of care plans for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
 </tr>
 </tbody></table>
+<h2 id='clinical-impression'>Clinical Impression</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of clinical impressions for a patient</p>
+
+<p><strong>Description:</strong> RESTful searching for clinical impressions by visit date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/ClinicalImpression</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of visit date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of clinical impressions for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='condition'>Condition</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of conditions for a single patient</p>
+
+<p><strong>Description:</strong> RESTful searching for conditions by onset date and abatement date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/Condition</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>onset-date</td>
+<td>query</td>
+<td>The collection of condition onset date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>abatement-date</td>
+<td>query</td>
+<td>The collection of condition abatement date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of conditions for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='device'>Device</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of devices for a patient</p>
+<h3 id='http-request-6'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/Device</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of device effective date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of devices for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='encounter'>Encounter</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of encounters for a single patient</p>
+
+<p><strong>Description:</strong> RESTful searching for conditions by encounter date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-7'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/Encounter</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of encounter date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of encounters for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='reference'>Reference</h2>
+<p><strong><em>GET</em></strong> </p>
+<h3 id='http-request-8'>HTTP Request</h3>
+<p><code>***GET*** /Reference</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+</tr>
+</tbody></table>
+<h2 id='goal'>Goal</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of goals for a single patient</p>
+
+<p><strong>Description:</strong> RESTful searching for goals by visit date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-9'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/Goal</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of visit date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of goals for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='immunization'>Immunization</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of immunizations for a single patient</p>
+
+<p><strong>Description:</strong> RESTful searching for current immunizations by administration date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-10'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/Immunization</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of current immunization administration date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of immunizations for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='medication-dispensement'>Medication Dispensement</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of medication dispensements for a single patient</p>
+
+<p><strong>Description:</strong> RESTful searching for medication dispensements by preparation date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-11'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/MedicationDispense</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>whenprepared</td>
+<td>query</td>
+<td>The collection of preparation date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of medications for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='medication-statements'>Medication Statements</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of medication statements for a single patient</p>
+
+<p><strong>Description:</strong> RESTful searching for medication statements by effective date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-12'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/MedicationStatement</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>effective</td>
+<td>query</td>
+<td>The collection of effective date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of medications for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='observation'>Observation</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of diagnostic observations for a single patient</p>
+
+<p><strong>Description:</strong> This request requires a category code to search on. The following category codes are supported:
+- laboratory
+- social-history
+- vital-signs</p>
+
+<p>RESTful searching for observations by date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-13'>HTTP Request</h3>
+<p><code>***GET*** /{patientUid}/Observation</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUid</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>category</td>
+<td>query</td>
+<td>The category of observation to load</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of observation obtained date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of diagnostic observations for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='patient'>Patient</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get the demographic information for a patient</p>
+<h3 id='http-request-14'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns patient information</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='patient-id-search'>Patient ID Search</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Attempts to find a single patient that matches the given search criteria and if
+successful returns that patient&#39;s unique identifier.</p>
+
+<p>At least one of query parameters is required to perform a search.</p>
+<h3 id='http-request-15'>HTTP Request</h3>
+<p><code>***GET*** /ID</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>family</td>
+<td>query</td>
+<td>The family (last) name of the patient</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>given</td>
+<td>query</td>
+<td>The given (first) name of the patient</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>birthdate</td>
+<td>query</td>
+<td>The patient&#39;s date of birth formatted as YYYY-MM-DD</td>
+<td>No</td>
+<td>dateTime</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>query</td>
+<td>The patient&#39;s phone number which will be matched against any phone number (home, cell, etc.)</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>email</td>
+<td>query</td>
+<td>The patient&#39;s email address</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>address-city</td>
+<td>query</td>
+<td>The city of the patient&#39;s address</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>address-state</td>
+<td>query</td>
+<td>The state of the patient&#39;s address</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>address-postalcode</td>
+<td>query</td>
+<td>The postal (zip) code of the patient&#39;s address</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>identifier</td>
+<td>query</td>
+<td>The patient&#39;s Nextech chart number</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns the patient&#39;s unique identifier</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No search parameters were specified or the search is not specific enough</td>
+</tr>
+<tr>
+<td>404</td>
+<td>No patients met the search criteria</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='patient-search'>Patient Search</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Searches for all patients matching the given search criteria. At least one search parameter is required.</p>
+
+<p>Note: The search currently has a limit of 500 patients.</p>
+<h3 id='http-request-16'>HTTP Request</h3>
+<p><code>***GET*** /</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>family</td>
+<td>query</td>
+<td>The family (last) name of the patient</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>given</td>
+<td>query</td>
+<td>The given (first) name of the patient</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>birthdate</td>
+<td>query</td>
+<td>The patient&#39;s date of birth formatted as YYYY-MM-DD</td>
+<td>No</td>
+<td>dateTime</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>query</td>
+<td>The patient&#39;s phone number which will be matched against any phone number (home, cell, etc.)</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>email</td>
+<td>query</td>
+<td>The patient&#39;s email address</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>address-city</td>
+<td>query</td>
+<td>The city of the patient&#39;s address</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>address-state</td>
+<td>query</td>
+<td>The state of the patient&#39;s address</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>address-postalcode</td>
+<td>query</td>
+<td>The postal (zip) code of the patient&#39;s address</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>identifier</td>
+<td>query</td>
+<td>The patient&#39;s Nextech chart number</td>
+<td>No</td>
+<td>string</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns patient objects for the matching patients</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No search parameters were specified</td>
+</tr>
+<tr>
+<td>404</td>
+<td>No patients met the search criteria</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h2 id='procedure'>Procedure</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of procedures for a single patient</p>
+
+<p><strong>Description:</strong> RESTful searching for procedures by performed date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge, ne.</p>
+<h3 id='http-request-17'>HTTP Request</h3>
+<p><code>***GET*** /{patientUID}/Procedure</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>patientUID</td>
+<td>path</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of procedure performed date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of diagnostic observations for a patient</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+
+<!-- Converted with the swagger-to-slate https://github.com/lavkumarv/swagger-to-slate -->
 <h1 id='errors'>Errors</h1>
 <aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
 
@@ -491,12 +1636,6 @@ Remember — a happy kitten is an authenticated kitten!
 
       </div>
       <div class="dark-box">
-          <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-                <a href="#" data-language-name="javascript">javascript</a>
-          </div>
       </div>
     </div>
   </body>
