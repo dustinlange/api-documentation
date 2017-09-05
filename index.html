@@ -281,6 +281,14 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#appointment-api" class="toc-h1 toc-link" data-title="Appointment API">Appointment API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#appointment" class="toc-h2 toc-link" data-title="Appointment API">Appointment</a>
+                  </li>
+              </ul>
+          </li>
       </div>
         <ul class="toc-footer">
             <li><a href='#'>Sign Up for a Developer Key</a></li>
@@ -1566,6 +1574,147 @@ successful returns that patient&#39;s unique identifier.</p>
 <tr>
 <td>404</td>
 <td>Specified patient does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h1 id='appointment-api'>Appointment API</h1><h2 id='appointment'>Appointment</h2>
+<p><strong><em>GET</em></strong> </p>
+
+<p><strong>Summary:</strong> Get a bundle of appointments</p>
+
+<p><strong>Description:</strong> RESTful searching for appointments by appointment start date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge.</p>
+<h3 id='http-request-18'>HTTP Request</h3>
+<p><code>***GET*** /</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>identifier</td>
+<td>query</td>
+<td>The unique identifier acquired from the appointment search</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>patient</td>
+<td>query</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of appointment date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of appointments</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient or patient appointments do not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+
+<p><strong><em>PUT</em></strong> </p>
+
+<p><strong>Summary:</strong> Update an existing appointment&#39;s status</p>
+<h3 id='http-request-19'>HTTP Request</h3>
+<p><code>***PUT*** /{identifier}</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>identifier</td>
+<td>path</td>
+<td>The unique identifier of the appointment to be updated</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>commit</td>
+<td>body</td>
+<td>The object representing the changes to be made</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns acknowledgement of success</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided or invalid</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified appointment does not exist</td>
 </tr>
 <tr>
 <td>500</td>

@@ -1,0 +1,270 @@
+<h1 id='introduction'>Introduction</h1>
+<p>The Nextech Select Appointment API is a RESTful implementation based on the STU 3 (3.0.1) version of the <a href="https://www.hl7.org/fhir/index.html">FHIR® standard</a>.</p>
+
+<p>Although the FHIR® standard supports both JSON and XML, this API currently only supports JSON.  Therefore any type explicitly defined in the request&#39;s <code>Accept</code> header will be ignored.  </p>
+<h2 id='authentication'>Authentication</h2>
+<p>Nextech&#39;s implementation of the FHIR® standard is protected by the OAuth 2 protocol for authenticating requests.  Every API request requires a Bearer token to be passed in the Authorization Header.</p>
+
+<p><code>Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng...</code></p>
+<h3 id='request-authorization'>Request Authorization</h3>
+<p>To obtain a Bearer token, the user must first request authorization using a registered app&#39;s client identifier.</p>
+
+<p><code>https://login.microsoftonline.com/mdintellesys.com/oauth2/authorize?response_type=code&amp;resource=https%3A%2F%2Fmdintellesys.com%2FPartnerAPI&amp;client_id=[client_id]</code></p>
+
+<p>The user will be asked to log in using their credentials.  Upon first login, they will be asked to authorize the use of the application.  If they don&#39;t have credentials, they will need to create an account which will verify their identity. </p>
+
+<p>Upon successful authentication, an authorization code will be included as the value of the <code>code</code> parameter in the redirect URL.  This code, along with the client secret will be included in the request to get an access token.</p>
+<h3 id='request-access-token'>Request Access Token</h3>
+<p><code>POST https://login.microsoftonline.com/mdintellesys.com/oauth2/token</code></p>
+
+<p>Add the following parameters as a <code>x-www-form-urlencoded</code> query string to the request body:
+<code>
+grant_type: authorization_code
+client_id: [client_id]
+code: [authorization_code]
+client_secret: [client_secret]
+</code></p>
+
+<p>The response includes the <code>access_token</code> which should be included in the Authorization header when making an API request.
+<code>
+{
+  &quot;token_type&quot;: &quot;Bearer&quot;,
+  &quot;scope&quot;: &quot;user_impersonation&quot;,
+  &quot;expires_in&quot;: &quot;3599&quot;,
+  &quot;ext_expires_in&quot;: &quot;0&quot;,
+  &quot;expires_on&quot;: &quot;1495481979&quot;,
+  &quot;not_before&quot;: &quot;1495478079&quot;,
+  &quot;resource&quot;: &quot;https://mdintellesys.com/PartnerAPI&quot;,
+  &quot;access_token&quot;: &quot;eyJ0eXAiOiJKV1QiLC...&quot;
+  &quot;refresh_token&quot;: &quot;AQABAAAAAABnfiG-m...&quot;
+  &quot;id_token&quot;: &quot;eyJ0eXAiOiJKV1QiLCJh...&quot;
+}
+</code> </p>
+
+<p><strong>Version:</strong> v1 </p>
+<h1 id='authentication-2'>Authentication</h1>
+<table><thead>
+<tr>
+<th>oauth2</th>
+<th><em>OAuth 2.0</em></th>
+</tr>
+</thead><tbody>
+</tbody></table>
+<h1 id=''>/</h1><h2 id='strong-em-get-em-strong'><strong><em>GET</em></strong></h2>
+<p><strong>Summary:</strong> Get a bundle of appointments</p>
+
+<p><strong>Description:</strong> RESTful searching for appointments by appointment start date is supported. See https://www.hl7.org/fhir/search.html for instructions on formatting search criteria. The following search prefixes are supported: lt, gt, eq, le, ge.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>***GET*** /</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>identifier</td>
+<td>query</td>
+<td>The unique identifier acquired from the appointment search</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>patient</td>
+<td>query</td>
+<td>The unique identifier acquired from the patient search</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>date</td>
+<td>query</td>
+<td>The collection of appointment date filters</td>
+<td>No</td>
+<td>array</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns a bundle of appointments</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified patient or patient appointments do not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h1 id='identifier'>/{IDENTIFIER}</h1><h2 id='strong-em-put-em-strong'><strong><em>PUT</em></strong></h2>
+<p><strong>Summary:</strong> Update an existing appointment&#39;s status</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>***PUT*** /{identifier}</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>identifier</td>
+<td>path</td>
+<td>The unique identifier of the appointment to be updated</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>commit</td>
+<td>body</td>
+<td>The object representing the changes to be made</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>Returns acknowledgement of success</td>
+</tr>
+<tr>
+<td>400</td>
+<td>No supported search parameters provided or invalid</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Specified appointment does not exist</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal server error</td>
+</tr>
+</tbody></table>
+<h1 id='reference'>/REFERENCE</h1><h2 id='strong-em-get-em-strong-2'><strong><em>GET</em></strong></h2><h3 id='http-request-3'>HTTP Request</h3>
+<p><code>***GET*** /Reference</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+</tr>
+</tbody></table>
+<h1 id='error'>/ERROR</h1><h2 id='strong-em-get-em-strong-3'><strong><em>GET</em></strong></h2><h3 id='http-request-4'>HTTP Request</h3>
+<p><code>***GET*** /Error</code> </p>
+
+<p><strong>Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Located in</th>
+<th>Description</th>
+<th>Required</th>
+<th>Type</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>errorCode</td>
+<td>query</td>
+<td></td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+<tr>
+<td>nx-practice-id</td>
+<td>header</td>
+<td>The unique identifier for a practice</td>
+<td>Yes</td>
+<td>string</td>
+</tr>
+</tbody></table>
+
+<p><strong>Responses</strong></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+</tr>
+</tbody></table>
+
+<!-- Converted with the swagger-to-slate https://github.com/lavkumarv/swagger-to-slate -->
