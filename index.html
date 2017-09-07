@@ -213,6 +213,14 @@
       <div id="toc" class="toc-list-h1">
           <li>
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#pagination" class="toc-h2 toc-link" data-title="Introduction">Pagination</a>
+                  </li>
+                  <li>
+                    <a href="#errors" class="toc-h2 toc-link" data-title="Introduction">Errors</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
@@ -292,17 +300,50 @@
       </div>
         <ul class="toc-footer">
             <li><a href='#'>Terms of Use</a></li>
+            <li><a href='http://hl7.org/fhir/'>FHIR Documentation</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>The Nextech Select Patient API is a RESTful implementation based on the STU 3 (3.0.1) version of the <a href="https://www.hl7.org/fhir/index.html">FHIR® standard</a>.</p>
+<p>The Nextech Select Open API is a RESTful implementation based on the STU 3 (3.0.1) version of the <a href="https://www.hl7.org/fhir/index.html">FHIR® standard</a>.</p>
 
 <p>Although the FHIR® standard supports both JSON and XML, this API currently only supports JSON.  Therefore any type explicitly defined in the request&#39;s <code>Accept</code> header will be ignored.</p>
+<h2 id='pagination'>Pagination</h2>
+<p><em>Applies to: Patient API • Appointment API</em></p>
+<h2 id='errors'>Errors</h2>
+<p><em>Applies to: Patient API • Appointment API</em></p>
+
+<table><thead>
+<tr>
+<th>Code</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>OK - Successful request</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request - The request is missing information or is malformed</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden - The request is valid, but the server is refusing action</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found - The requested resource cannot be found</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error - We had a problem with our server</td>
+</tr>
+</tbody></table>
 <h1 id='authentication'>Authentication</h1>
-<p>Nextech&#39;s implementation of the FHIR® standard is protected by the OAuth 2 protocol for authenticating requests.  Every API request requires a Bearer token to be passed in the Authorization Header.</p>
+<p>Nextech&#39;s implementation of the FHIR® standard is protected by the <a href="https://oauth.net/2/">OAuth 2.0 standard</a> for authenticating requests.  Every API request requires a Bearer token to be passed in the Authorization Header.</p>
 
 <p><code>Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng...</code></p>
 <h3 id='request-authorization'>Request Authorization</h3>
